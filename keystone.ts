@@ -5,7 +5,7 @@ import { insertSeedData } from './seed-data';
 export default config({
     db: {
         provider: "postgresql",
-        url: process.env.DATABASE_URL || '',
+        url: process.env.DATABASE_URL,
         async onConnect(context) {
             if (process.argv.includes("--seed-data")) {
                 await insertSeedData(context)
