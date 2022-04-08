@@ -17,6 +17,7 @@ model User {
   email          String @unique @default("")
   posts          Post[] @relation("Post_author")
   postsAuthorNew Post[] @relation("Post_authorNew")
+  password       String
 }
 
 model Post {

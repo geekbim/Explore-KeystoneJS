@@ -677,15 +677,15 @@
   resolved "https://registry.yarnpkg.com/@js-joda/core/-/core-4.3.1.tgz#1df9f197d060f1eb087a895a5e33adb7f12b58fc"
   integrity sha512-oeaetlodcqVsiZDxnEcqsbs+sXBkASxua0mXs5OXuPQXz3/wdPTMlxwfQ4z2HKcOik3S9voW3QJkp/KLWDhvRQ==
 
-"@keystone-6/auth@^1.0.1":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@keystone-6/auth/-/auth-1.0.2.tgz#3c09d501fcf544e7d7f622e42fe8bed753eaac58"
-  integrity sha512-mxtNzSYbOefLToWaikUZgKdg/ZC62+9B8uwBcRyXLvy3JJb2dh/SeZWnU+4A7R9ooL3G/wJXwXPmXY+KDVGXqw==
+"@keystone-6/auth@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@keystone-6/auth/-/auth-2.0.0.tgz#6c6597753b99015fe4d5076202b047caf2112092"
+  integrity sha512-FEExSzME5YVeitY1fUxsn+iUUmBVbSm0+BS/+iiCTLqwF08Qeu8SjIddXiQwRHClc5GQgqEdfGEOeSTW5B+m5g==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@keystone-ui/button" "^6.0.0"
     "@keystone-ui/core" "^4.0.0"
-    "@keystone-ui/fields" "^6.0.0"
+    "@keystone-ui/fields" "^6.0.1"
     "@keystone-ui/loading" "^5.0.0"
     "@keystone-ui/notice" "^5.0.0"
     cross-fetch "^3.1.4"

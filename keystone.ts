@@ -1,5 +1,6 @@
 import { config, list } from '@keystone-6/core';
-import { integer, relationship, select, text, timestamp } from '@keystone-6/core/fields';
+import { password, integer, relationship, select, text, timestamp } from '@keystone-6/core/fields';
+import { withAuth, session } from './auth';
 
 const lists = {
   User: list({
@@ -8,6 +9,7 @@ const lists = {
       email: text({ validation: { isRequired: true }, isIndexed: 'unique' }),
       posts: relationship({ ref: 'Post.author', many: true }),
       postsAuthorNew: relationship({ ref: 'Post.authorNew', many: true }),
+      password: password({ validation: { isRequired: true } }),  
     },
   }),
   Post: list({
@@ -38,10 +40,16 @@ const lists = {
   }),
 }
 
-export default config({
-  db: {
-    provider: 'sqlite',
-    url: 'file:./keystone.db',
-  },
-  lists,
-});
+export default config(
+  withAuth({
+    db: {
+      provider: 'sqlite',
+      url: 'file:./keystone.db',
+    },
+    lists,
+    session,
+    ui: {
+      isAccessAllowed: (context) => !!context.session?.data,
+    },
+  }),
+);
