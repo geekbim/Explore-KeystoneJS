@@ -12,7 +12,22 @@ generator client {
 }
 
 model User {
-  id    String @id @default(cuid())
-  name  String @default("")
-  email String @unique @default("")
+  id             String @id @default(cuid())
+  name           String @default("")
+  email          String @unique @default("")
+  posts          Post[] @relation("Post_author")
+  postsAuthorNew Post[] @relation("Post_authorNew")
+}
+
+model Post {
+  id          String  @id @default(cuid())
+  title       String  @default("")
+  totalPages  Int?
+  author      User?   @relation("Post_author", fields: [authorId], references: [id])
+  authorId    String? @map("author")
+  authorNew   User?   @relation("Post_authorNew", fields: [authorNewId], references: [id])
+  authorNewId String? @map("authorNew")
+
+  @@index([authorId])
+  @@index([authorNewId])
 }

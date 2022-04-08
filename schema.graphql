@@ -5,6 +5,20 @@ type User {
   id: ID!
   name: String
   email: String
+  posts(
+    where: PostWhereInput! = {}
+    orderBy: [PostOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Post!]
+  postsCount(where: PostWhereInput! = {}): Int
+  postsAuthorNew(
+    where: PostWhereInput! = {}
+    orderBy: [PostOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Post!]
+  postsAuthorNewCount(where: PostWhereInput! = {}): Int
 }
 
 input UserWhereUniqueInput {
@@ -19,6 +33,8 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
+  posts: PostManyRelationFilter
+  postsAuthorNew: PostManyRelationFilter
 }
 
 input IDFilter {
@@ -60,6 +76,12 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input PostManyRelationFilter {
+  every: PostWhereInput
+  some: PostWhereInput
+  none: PostWhereInput
+}
+
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -74,6 +96,15 @@ enum OrderDirection {
 input UserUpdateInput {
   name: String
   email: String
+  posts: PostRelateToManyForUpdateInput
+  postsAuthorNew: PostRelateToManyForUpdateInput
+}
+
+input PostRelateToManyForUpdateInput {
+  disconnect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -84,6 +115,83 @@ input UserUpdateArgs {
 input UserCreateInput {
   name: String
   email: String
+  posts: PostRelateToManyForCreateInput
+  postsAuthorNew: PostRelateToManyForCreateInput
+}
+
+input PostRelateToManyForCreateInput {
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
+type Post {
+  id: ID!
+  title: String
+  totalPages: Int
+  author: User
+  authorNew: User
+}
+
+input PostWhereUniqueInput {
+  id: ID
+}
+
+input PostWhereInput {
+  AND: [PostWhereInput!]
+  OR: [PostWhereInput!]
+  NOT: [PostWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  totalPages: IntNullableFilter
+  author: UserWhereInput
+  authorNew: UserWhereInput
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input PostOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  totalPages: OrderDirection
+}
+
+input PostUpdateInput {
+  title: String
+  totalPages: Int
+  author: UserRelateToOneForUpdateInput
+  authorNew: UserRelateToOneForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PostUpdateArgs {
+  where: PostWhereUniqueInput!
+  data: PostUpdateInput!
+}
+
+input PostCreateInput {
+  title: String
+  totalPages: Int
+  author: UserRelateToOneForCreateInput
+  authorNew: UserRelateToOneForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 """
@@ -101,6 +209,12 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createPost(data: PostCreateInput!): Post
+  createPosts(data: [PostCreateInput!]!): [Post]
+  updatePost(where: PostWhereUniqueInput!, data: PostUpdateInput!): Post
+  updatePosts(data: [PostUpdateArgs!]!): [Post]
+  deletePost(where: PostWhereUniqueInput!): Post
+  deletePosts(where: [PostWhereUniqueInput!]!): [Post]
 }
 
 type Query {
@@ -112,6 +226,14 @@ type Query {
   ): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
+  posts(
+    where: PostWhereInput! = {}
+    orderBy: [PostOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Post!]
+  post(where: PostWhereUniqueInput!): Post
+  postsCount(where: PostWhereInput! = {}): Int
   keystone: KeystoneMeta!
 }
 
