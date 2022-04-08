@@ -30,6 +30,7 @@ model Post {
   authorNew   User?     @relation("Post_authorNew", fields: [authorNewId], references: [id])
   authorNewId String?   @map("authorNew")
   status      String?   @default("draft")
+  content     String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 
   @@index([authorId])
   @@index([authorNewId])
