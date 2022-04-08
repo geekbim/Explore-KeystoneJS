@@ -1,5 +1,5 @@
 import { config, list } from '@keystone-6/core';
-import { integer, relationship, text } from '@keystone-6/core/fields';
+import { integer, relationship, select, text, timestamp } from '@keystone-6/core/fields';
 
 const lists = {
   User: list({
@@ -14,6 +14,7 @@ const lists = {
     fields: {
       title: text({ validation: { isRequired: true } }),
       totalPages: integer(),
+      publishedAt: timestamp(),
       author: relationship({ ref: 'User.posts' }),
       authorNew: relationship({ 
         ref: 'User.postsAuthorNew',
@@ -24,6 +25,14 @@ const lists = {
           linkToItem: true,
           inlineCreate: { fields: ['name', 'email'] },
         },
+      }),
+      status: select({
+        options: [
+          { label: 'Pubished', value: 'published' },
+          { label: 'Draft', value: 'draft' },
+        ],
+        defaultValue: 'draft',
+        ui: { displayMode: 'segmented-control' },
       }),
     },
   }),

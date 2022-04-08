@@ -20,13 +20,15 @@ model User {
 }
 
 model Post {
-  id          String  @id @default(cuid())
-  title       String  @default("")
+  id          String    @id @default(cuid())
+  title       String    @default("")
   totalPages  Int?
-  author      User?   @relation("Post_author", fields: [authorId], references: [id])
-  authorId    String? @map("author")
-  authorNew   User?   @relation("Post_authorNew", fields: [authorNewId], references: [id])
-  authorNewId String? @map("authorNew")
+  publishedAt DateTime?
+  author      User?     @relation("Post_author", fields: [authorId], references: [id])
+  authorId    String?   @map("author")
+  authorNew   User?     @relation("Post_authorNew", fields: [authorNewId], references: [id])
+  authorNewId String?   @map("authorNew")
+  status      String?   @default("draft")
 
   @@index([authorId])
   @@index([authorNewId])
