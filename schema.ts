@@ -1,7 +1,6 @@
-import { config, list } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { password, integer, relationship, select, text, timestamp } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
-import { withAuth, session } from './auth';
 
 export const lists = {
   User: list({
